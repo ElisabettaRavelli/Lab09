@@ -1,5 +1,5 @@
 /**
- * Skeleton for 'Borders.fxml' Controller Class
+à * Skeleton for 'Borders.fxml' Controller Class
  */
 
 package it.polito.tdp.borders;

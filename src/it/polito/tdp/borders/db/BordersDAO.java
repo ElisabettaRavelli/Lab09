@@ -36,7 +36,7 @@ public class BordersDAO {
 			throw new RuntimeException("Error Connection Database");
 		}
 	}
-	
+	//METODO PER OTTENERE I VERTICI DA INSERIRE NEL GRAFO
 	public List<Country> getCountries(int anno, Map<Integer, Country> cMap) {
 
 		String sql = "select * from country " + 
@@ -54,12 +54,14 @@ public class BordersDAO {
 			ResultSet rs = st.executeQuery();
 
 			while (rs.next()) {
+				//controllo che non sia già presente nella mappa il Country
 				 if(cMap.get(rs.getInt("ccode"))==null) {
+					 //se non c'è creo l'oggetto country e lo inserisco nella mappa e nella lista
 					 Country country = new Country(rs.getInt("ccode"), rs.getString("stateAbb"), rs.getString("stateNme"));
 					 
 					 cMap.put(country.getCode(), country);
 					 result.add(country);
-				 }else {
+				 }else { //se è già presente nella mappa lo inserisco solo nella lista prendendolo dalla mappa
 					 result.add(cMap.get(rs.getInt("ccode")));
 				 }
 			}
@@ -73,7 +75,7 @@ public class BordersDAO {
 			throw new RuntimeException("Error Connection Database");
 		}
 	}
-
+	//METODO CHE MI RESTITUISCE GLI ARCHI DEL GRAFO
 	public List<Border> getCountryPairs(int anno) {
 
 		String sql = "select state1no, state2no " + 

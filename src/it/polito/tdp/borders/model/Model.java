@@ -20,7 +20,7 @@ import org.jgrapht.traverse.GraphIterator;
 import it.polito.tdp.borders.db.BordersDAO;
 
 public class Model {
-	
+	//la mappa continene come chiave il codice del country e come valori gli oggetti country
 	private Map<Integer, Country> cMap;
 	private Graph<Country,DefaultEdge> grafo;
 	
@@ -33,7 +33,7 @@ public class Model {
 		
 		//AGGIUGO I VERTICI
 		BordersDAO dao = new BordersDAO();
-		dao.getCountries(anno, cMap);
+		dao.getCountries(anno, cMap); //popolo la mappa
 		Graphs.addAllVertices(grafo, cMap.values());
 		System.out.println("Vertici: "+grafo.vertexSet().size());
 		
@@ -46,7 +46,8 @@ public class Model {
 		
 	}
 	
-
+	//Metodo che mi permette di avere una lista di oggetti (CountruAndNumber) composti 
+	//da un country (vertice del grafo) e il suo grado
 	public List<CountryAndNumber> getCountryAndNumber() {
 		List<CountryAndNumber> list = new ArrayList<>();
 		for(Country tmp: grafo.vertexSet()) {
@@ -57,16 +58,17 @@ public class Model {
 	}
 
 	public List<Country> getCountries() {
+		//Metodo per passare da set a list
 		List<Country> c = grafo.vertexSet().stream().collect(Collectors.toList());
 		return c;
 		
 	}
-	
+	//Metodo che calcola le componenti connesse del grafo
 	public int calcolaCC() {
 		ConnectivityInspector<Country, DefaultEdge> ci = new ConnectivityInspector<Country, DefaultEdge>(grafo);
 		return ci.connectedSets().size();
 	}
-	
+	//Metodo per trovare tutti i vertici raggiungibili da source
 	public List<Country> trovaRaggiungibili(Country source){
 		
 		List<Country> result = new ArrayList<>();
